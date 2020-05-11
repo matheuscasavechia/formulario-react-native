@@ -48,7 +48,7 @@ export default StyleSheet.create({
         alignItems:'center'
 
     },
-    
+
     actions:{
         marginTop: 16,
         flexDirection: 'row',
@@ -62,6 +62,11 @@ export default StyleSheet.create({
         width: '48%',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    actionText: {
+        color: '#fff',
+        fontSize: 15,
+        fontWeight: 'bold',
     },
 
 });
