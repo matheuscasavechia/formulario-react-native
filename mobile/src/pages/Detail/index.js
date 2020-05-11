@@ -1,12 +1,16 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import styles from './styles';
 
 
 export default function Detail() {
     const navigation = useNavigation();
+    const route = useRoute();
+
+    const funcionario = route.params.funcionario;
+
     function navigationBack(){
         navigation.goBack()
     }
@@ -22,14 +26,17 @@ export default function Detail() {
             <View style={styles.incident}>
                 
                 <Text style={[styles.incidentProperty, {marginTop: 0}]}> NOME </Text>
-                <Text style={styles.incidentValue}> Funcionário1 </Text>
+                <Text style={styles.incidentValue}> {funcionario.nome_funcionario} </Text>
                 
                 <Text style={styles.incidentProperty}> E-MAIL </Text>
-                <Text style={styles.incidentValue}> funcionario1@email.com </Text>
+                <Text style={styles.incidentValue}> {funcionario.email_funcionario} </Text>
                 
                 <Text style={styles.incidentProperty}> SALARIO </Text>
-                <Text style={styles.incidentValue}> R$1200,00 </Text>
+                <Text style={styles.incidentValue}> {Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(funcionario.value)} </Text>
                 
+                <Text style={styles.incidentProperty}> ANTECIPAÇÃO SALARIAL </Text>
+                <Text style={styles.incidentValue}> {Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(funcionario.value)} </Text>
+
             </View>
 
             <View styele={styles.action}>
@@ -42,3 +49,5 @@ export default function Detail() {
 
     );
 }
+
+//{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(funcionario.value)}
