@@ -8,7 +8,6 @@ module.exports = {
         
         const funcionarios = await connection('funcionarios')
         .join('rh', 'rh.id', '=', 'funcionarios.rh_id')
-        .limit(5)
         .offset((page -1) * 5)
         .select([
          'funcionarios.*',
@@ -24,7 +23,7 @@ module.exports = {
     async create(request, response){
         const { nome_funcionario, email_funcionario, value } = request.body;
 
-        const rh_id = request.headers.authorization;
+        const rh_id = "5279f14e";
 
         const [id] = await connection('funcionarios').insert({
             nome_funcionario,
@@ -38,7 +37,7 @@ module.exports = {
 
     async delete(request, response){
         const { id } = request.params;
-        const rh_id = request.headers.authorization;
+        const rh_id = "5279f14e";
 
         const funcionario = await connection('funcionarios')
             .where('id', id)
@@ -52,5 +51,16 @@ module.exports = {
         await connection('funcionarios').where('id', id).delete();
 
         return response.status(204).send();
-    }
+    },
+
+    async put(request, response){
+        const { nome_funcionario, email_funcionario, value, id } = request.body;
+        console.log(parseFloat(value));
+
+        await connection('funcionarios')
+            .where('id', id)
+            .update({nome_funcionario: nome_funcionario, email_funcionario: email_funcionario, value: parseFloat(value)});
+
+        return response.status(204).send();
+    },
 };

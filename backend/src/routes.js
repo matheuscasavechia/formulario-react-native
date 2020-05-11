@@ -15,6 +15,7 @@ routes.post('/rh', RhController.create);
 
 routes.get('/funcionarios', FuncionariosController.index);
 routes.post('/funcionarios', FuncionariosController.create);
+routes.put('/funcionarios', FuncionariosController.put);
 routes.delete('/funcionarios/:id', FuncionariosController.delete);
 
 

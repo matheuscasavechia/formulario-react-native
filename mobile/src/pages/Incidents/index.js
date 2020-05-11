@@ -6,6 +6,9 @@ import styles from './styles';
 import api from '../../services/api';
 
 export default function Incidents() {
+    const func = {
+        maiorSalario: 0, menorSalario: 0, mediaSalarial: 0
+    };
     const [funcionarios, setFuncionarios] = useState([]);
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
@@ -16,7 +19,13 @@ export default function Incidents() {
     function navigateToDetail(funcionario) {
         navigation.navigate('Detail', { funcionario } );
     }
+    function navigateToNovoFuncionario() {
+        navigation.navigate('Novo Funcionario');
+    }
 
+    function deletar(id){
+        api.delete('funcionarios/' + id );
+    }
     async function loadFuncionarios(){
         if (loading){
             return;
@@ -36,6 +45,18 @@ export default function Incidents() {
         setPage(page + 1);
         setLoading(false);
 
+        funcionarios.forEach(function (item) {
+
+            if (item.value > parseFloat(func.maiorSalario)){
+                func.maiorSalario = item.value;     
+            }
+            if (item.value < parseFloat(func.menorSalario)){
+                func.menorSalario = item.value;     
+            }
+            
+            func.mediaSalarial = parseFloat(func.mediaSalarial) + parseFloat(item.value);
+        })
+        func.mediaSalarial = parseFloat(func.mediaSalarial) / parseInt(funcionarios.length);
     }
 
     useEffect(() => {
@@ -44,19 +65,24 @@ export default function Incidents() {
 
     return(
         <View style={styles.container}>
+            <View styele={styles.header}>
+                <TouchableOpacity style={styles.action} onPress={() => navigateToNovoFuncionario()}>
+                    <Text style={styles.actionText}>Novo</Text>
+                </TouchableOpacity>
+            </View>
             <View style={styles.header}>
                 <Text style={styles.headerText}>
-                    Funcionario com maior salário <Text style={styles.headerTextBold}>joao</Text>.
+                    Funcionário com maior salário <Text style={styles.headerTextBold}>{func.maiorSalario}</Text>.
                 </Text>
             </View> 
              <View style={styles.header}>
                 <Text style={styles.headerText}>
-                    Funcionario com o menor salário <Text style={styles.headerTextBold}>R$0,00</Text>.
+                    Funcionário com o menor salário <Text style={styles.headerTextBold}> {func.menorSalario} </Text>.
                 </Text>
              </View> 
              <View style={styles.header}>
                 <Text style={styles.headerText}>
-                    Media salarial da empresa <Text style={styles.headerTextBold}>R$0,00</Text>.
+                    Media salarial da empresa <Text style={styles.headerTextBold}> {func.mediaSalarial} </Text>.
                 </Text>
             </View> 
 
@@ -73,7 +99,7 @@ export default function Incidents() {
                     <TouchableOpacity style={styles.detailsButton} onPress={() => navigateToDetail(funcionario)}>
                     <Text style={styles.funcionarioName}><Feather name="user" size={20} color="gray" /> {funcionario.nome_funcionario} </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.trashButton} onPress={() => {}}>
+                    <TouchableOpacity style={styles.trashButton} onPress={() => deletar(funcionario.id)}>
                     <Feather name="trash" size={20} color="gray"/>
                     </TouchableOpacity>
 

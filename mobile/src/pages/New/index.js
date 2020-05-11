@@ -10,11 +10,15 @@ export default function Detail() {
     const navigation = useNavigation();
     const route = useRoute();
 
-    const funcionario = route.params.funcionario;
+    const funcionario = {};
 
-    function atuliazar(funcionario) {
-        api.put('funcionarios', funcionario );
+    function salvar(funcionario) {
+        if(funcionario.nome_funcionario == undefined || funcionario.email_funcionario == undefined || funcionario.value == undefined){
+            return alert('Preencha os campos');
+        }else{
+        api.post('funcionarios', funcionario );
         navigation.navigate('Funcionarios');
+        }
     }
 
     function name(text){  
@@ -36,21 +40,17 @@ export default function Detail() {
             <View style={styles.incident}>
                 
                 <Text style={[styles.incidentProperty, {marginTop: 0}]}> NOME </Text>
-                <TextInput style={styles.incidentValue} placeholder="Digite um Nome" onChangeText={text => name(text)}  defaultValue={funcionario.nome_funcionario} />
+                <TextInput style={styles.incidentValue} placeholder="Digite um Nome" onChangeText={text => name(text)}  defaultValue={''} />
                 
                 <Text style={styles.incidentProperty}> E-MAIL </Text>
-                <TextInput style={styles.incidentValue} placeholder="Digite um E-mail" onChangeText={text => email(text)}  defaultValue={funcionario.email_funcionario} />
+                <TextInput style={styles.incidentValue} placeholder="Digite um E-mail" onChangeText={text => email(text)}  defaultValue={''} />
                 
                 <Text style={styles.incidentProperty}> SALARIO </Text>
-                <TextInput style={styles.incidentValue} placeholder="Digite um salario"  onChangeText={text => valor(text)} defaultValue={funcionario.value} />
-                
-                <Text style={styles.incidentProperty}> ANTECIPAÇÃO SALARIAL </Text>
-                <Text style={styles.incidentValue}> {(funcionario.value)*0.4} </Text>
-
+                <TextInput style={styles.incidentValue} placeholder="Digite um salario"  onChangeText={text => valor(text)} defaultValue={''} />
             </View>
 
             <View styele={styles.action}>
-                <TouchableOpacity style={styles.action} onPress={() => atuliazar(funcionario)}>
+                <TouchableOpacity style={styles.action} onPress={() => salvar(funcionario)}>
                     <Text style={styles.actionText}>Salvar</Text>
                 </TouchableOpacity>
 

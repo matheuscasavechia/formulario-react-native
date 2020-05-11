@@ -41,12 +41,6 @@ export default StyleSheet.create({
 
     },
 
-    actions:{
-        marginTop: 16,
-        flexDirection: 'row',
-        justifyContent:'space-between',
-    },
-
     action:{
         backgroundColor:'#3E50B4',
         borderRadius: 8,

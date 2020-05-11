@@ -47,6 +47,21 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
         alignItems:'center'
 
-    }
+    },
+    
+    actions:{
+        marginTop: 16,
+        flexDirection: 'row',
+        justifyContent:'space-between',
+    },
+
+    action:{
+        backgroundColor:'#3E50B4',
+        borderRadius: 8,
+        height: 50,
+        width: '48%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 
 });
